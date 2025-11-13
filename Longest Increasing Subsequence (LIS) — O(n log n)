@@ -1,0 +1,34 @@
+
+
+## Problem 1 — Longest Increasing Subsequence (LIS) — O(n log n)
+
+
+```java
+// LIS.java
+import java.io.*;
+import java.util.*;
+
+public class LIS {
+    public static int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) return 0;
+        ArrayList<Integer> tails = new ArrayList<>();
+        for (int x : nums) {
+            int i = Collections.binarySearch(tails, x);
+            if (i < 0) i = - (i + 1);
+            if (i == tails.size()) tails.add(x);
+            else tails.set(i, x);
+        }
+        return tails.size();
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = br.readLine();
+        if (line == null) return;
+        int n = Integer.parseInt(line.trim());
+        int[] arr = new int[n];
+        String[] parts = br.readLine().trim().split("\\s+");
+        for (int i = 0; i < n; i++) arr[i] = Integer.parseInt(parts[i]);
+        System.out.println(lengthOfLIS(arr));
+    }
+}
